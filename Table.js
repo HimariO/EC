@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {
   ListView,
-  TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
   Text,
   TextInput,
@@ -18,19 +18,44 @@ const window = Dimensions.get('window')
 class CourseBox extends Component{
 
   static propTypes = {
-    event_name: React.PropTypes.string.isRequired,
-    event_time: React.PropTypes.number.isRequired,
-    event_date: React.PropTypes.number.isRequired,
-    event_type: React.PropTypes.string,
+    data_source: React.PropTypes.object.isRequired,
+    notic_table: React.PropTypes.func
+  }
+
+  constructor(props){
+    super(props)
+    this.state = {
+      event_name: this.props.data_source.name,
+      event_time: this.props.data_source.time, // 0~15 course[0:15, A:D]
+      event_type: this.props.data_source.type,
+      event_date: this.props.data_source.date, // 1~5 mon to fri.
+    }
+
+    this._onPress = this._onPress.bind(this)
   }
 
 
-  render() {
+  _onPress() {
+    this.setState({event_time: 3})
+    this.props.notic_table(this.props.data_source)
+  }
 
+  render() {
     return (
-      <View style={styles.box}>
-        <Text style={{fontSize: 30}}>{this.props.event_name}</Text>
-        <Text>{this.props.event_type}</Text>
+      <TouchableOpacity style={styles.box} onPress={this._onPress}>
+        <Text style={{fontSize: 30}}>{this.state.event_name}</Text>
+        <Text>{this.state.event_type}</Text>
+        <Text>{this.state.event_time}</Text>
+      </TouchableOpacity>
+    )
+  }
+}
+
+
+class CourseDetail extends Component{
+  render() {
+    return (
+      <View style={{height: 100, backgroundColor:'rgb(75, 193, 237)'}}>
       </View>
     )
   }
@@ -43,41 +68,61 @@ export default class CourseTable extends Component{
     cells: React.PropTypes.arrayOf(React.PropTypes.array).isRequired,
   }
 
-  getInitialState() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var data = this.props.cells.map((e, i)=>{this._getRowComponent(e)})
+  state = {
+      onDetail: false,
+  }
 
-    return {
-      dataSource: ds.cloneWithRows(data),
+
+  constructor(props){
+    super(props)
+    this._handleBoxPress = this._handleBoxPress.bind(this)
+    this._getRowComponent = this._getRowComponent.bind(this)
+  }
+
+
+  _handleBoxPress(ob_ref) {
+    var detail = <CourseDetail ob_ref={ob_ref}/>
+    if(!this.state.onDetail) {
+      this.props.cells.splice(ob_ref.event_time, 0, detail)
+      this.setState({onDetail: true})
     }
   }
 
   _getRowComponent(rowData) {
-    var row_comps = rowData.map((cell, cell_i)=>{
+    try{
+      var row_comps = rowData.map((cell, cell_i)=>{
+        return (
+          <View style={{flex: 1}} key={cell_i}>
+            <CourseBox
+              data_source={cell}
+              notic_table={this._handleBoxPress}
+            />
+          </View>
+        )
+      })
+
       return (
-        <View style={{flex: 1}} key={cell_i}>
-          <CourseBox
-            event_name={cell.name}
-            event_date={cell.date}
-            event_type={cell.type}
-            event_time={cell.time}
-          />
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          {row_comps}
         </View>
       )
-    })
-
-    return (
-      <View style={{flex: 1, flexDirection: 'row'}}>
-        {row_comps}
-      </View>
-    )
+    }catch(e){
+      return rowData
+    }
   }
 
 
   render() {
     return (
       <ScrollView>
-        {this.props.cells.map((e)=>this._getRowComponent(e))}
+        {
+          this.props.cells.map((e)=>{
+            if(Component.isPrototypeOf(e))
+              return e
+
+            return this._getRowComponent(e)
+          })
+        }
       </ScrollView>
     )
   }

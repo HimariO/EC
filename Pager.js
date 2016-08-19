@@ -21,6 +21,7 @@ import {
 import SchListCard from './OneDaySch'
 // import Calendar from 'react-native-calendar-android'
 import CourseTable from './Table'
+import EventList from './EventScene'
 
 
 export default class ViewPagerPage extends Component {
@@ -32,6 +33,41 @@ export default class ViewPagerPage extends Component {
       cells: [
         [
           {name: '計算機組織概論', time: 1, date: 1, type: 'A'},
+          {name: 'b', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 2, date: 1, type: 'A'},
+          {name: 'b', time: 2, date: 1, type: 'A'},
+          {name: 'c', time: 2, date: 1, type: 'A'},
+          {name: 'c', time: 2, date: 1, type: 'A'},
+          {name: 'c', time: 2, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 3, date: 1, type: 'A'},
+          {name: 'buaiasudh', time: 3, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 1, date: 1, type: 'A'},
+          {name: 'b', time: 2, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 1, date: 1, type: 'A'},
+          {name: 'b', time: 2, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 1, date: 1, type: 'A'},
           {name: 'b', time: 2, date: 1, type: 'A'},
           {name: 'c', time: 1, date: 1, type: 'A'},
           {name: 'c', time: 1, date: 1, type: 'A'},
@@ -135,8 +171,8 @@ export default class ViewPagerPage extends Component {
                    />
                 </View>
 
-                <View style={{backgroundColor:'#1AA054'}}>
-                  <Text>page four</Text>
+                <View style={{backgroundColor:'rgb(75, 193, 237)'}}>
+                  <EventList/>
                 </View>
 
                 <View style={{backgroundColor:'#BA6014'}}>
