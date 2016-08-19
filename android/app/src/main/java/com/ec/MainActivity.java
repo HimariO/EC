@@ -1,6 +1,8 @@
 package com.ec;
 
 import com.facebook.react.ReactActivity;
+import com.chymtt.reactnativecalendar.CalendarPackage;
+import com.github.xinthink.rnmk.ReactMaterialKitPackage;
 
 public class MainActivity extends ReactActivity {
 

@@ -110,7 +110,10 @@ class EC extends Component {
 
       case 'viewPager':
         return (
-          <ViewPagerPage page_style={route.part}/>
+          <ViewPagerPage
+            page_style={route.part}
+            navigator={navigator}
+          />
         )
       break
 
@@ -131,7 +134,7 @@ class EC extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{part: 2, case: 'viewPager'}}
+        initialRoute={{part: 3, case: 'viewPager'}}
         renderScene={this._router}
       />
     )
