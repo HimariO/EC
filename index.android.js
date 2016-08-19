@@ -31,80 +31,10 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
 });
 
 
-class Scene extends Component {
-
-  _handleInput(event){
-    console.log(event)
-  }
-
-  render() {
-
-    return (
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome to React Native!
-          </Text>
-          <Text style={styles.instructions}>
-            This is Part {this.props.part}.
-          </Text>
-
-          <TouchableHighlight onPress={
-            ()=>this.props.navigatForward({part: this.props.part + 1, case: 'default'})
-          }>
-            <Text>Next One!</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight onPress={()=> {
-            this.props.navigatForward({part: this.props.part +1, case: 'material_test'})
-          }
-          }>
-            <Text>RN Material Lib!</Text>
-          </TouchableHighlight>
-
-
-          <TouchableHighlight onPress={()=> {
-            this.props.navigatForward({part: 1, case: 'viewPager'})
-          }
-          }>
-            <Text>View Pager 1 are Here!</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight onPress={()=> {
-            this.props.navigatForward({part: 2, case: 'viewPager'})
-          }
-          }>
-            <Text>View Pager 2 are Here!</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight onPress={()=> {
-            this.props.navigatForward({part: 3, case: 'viewPager'})
-          }
-          }>
-            <Text>View Pager 3 are Here!</Text>
-          </TouchableHighlight>
-
-        </View>
-      </ScrollView>
-    )
-  }
-}
-
-
 class EC extends Component {
 
   _router(route, navigator) {
     _navigator = navigator
-
-    var _navigatBack = ()=>{
-      console.log('Back')
-      navigator.pop()
-    }
-
-    var _navigatForward = (keys)=>{
-      console.log('GO');
-      navigator.push(keys)
-    }
 
     switch (route.case) {
 
@@ -117,16 +47,14 @@ class EC extends Component {
         )
       break
 
-      case 'default':
+      case 'courseDetail':
+      break
+
+      case 'chat':
+      break
+
+      case 'login':
       default:
-        return (
-          <Scene
-          navigatBack={_navigatBack}
-          navigatForward={_navigatForward}
-          part={route.part}
-          />
-        )
-      break;
 
     }
   }
@@ -134,7 +62,7 @@ class EC extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{part: 3, case: 'viewPager'}}
+        initialRoute={{part: 2, case: 'viewPager', pass_data: undefined}}
         renderScene={this._router}
       />
     )

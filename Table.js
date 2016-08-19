@@ -43,9 +43,9 @@ class CourseBox extends Component{
   render() {
     return (
       <TouchableOpacity style={styles.box} onPress={this._onPress}>
-        <Text style={{fontSize: 30}}>{this.state.event_name}</Text>
-        <Text>{this.state.event_type}</Text>
-        <Text>{this.state.event_time}</Text>
+        <Text style={{fontSize: 30}}>{this.props.data_source.name}</Text>
+        <Text>{this.props.data_source.type}</Text>
+        <Text>{this.props.data_source.time}</Text>
       </TouchableOpacity>
     )
   }
@@ -53,9 +53,28 @@ class CourseBox extends Component{
 
 
 class CourseDetail extends Component{
+  static propTypes = {
+    ob_ref: React.PropTypes.object.isRequired,
+  }
+
+
   render() {
     return (
       <View style={{height: 100, backgroundColor:'rgb(75, 193, 237)'}}>
+        <TouchableOpacity onPress={this.props.onClose}>
+          <Text>{this.props.ob_ref.time}</Text>
+          <TextInput
+            onChangeText={(text)=>{
+              this.props.ob_ref.name = text
+            }}
+          />
+          <TextInput
+            onChangeText={(text)=>{
+              this.props.ob_ref.type = text
+            }}
+          />
+
+        </TouchableOpacity>
       </View>
     )
   }
@@ -77,16 +96,26 @@ export default class CourseTable extends Component{
     super(props)
     this._handleBoxPress = this._handleBoxPress.bind(this)
     this._getRowComponent = this._getRowComponent.bind(this)
+    this._closeDetail = this._closeDetail.bind(this)
   }
 
 
   _handleBoxPress(ob_ref) {
-    var detail = <CourseDetail ob_ref={ob_ref}/>
+    var detail = <CourseDetail ob_ref={ob_ref} onClose={this._closeDetail}/>
     if(!this.state.onDetail) {
-      this.props.cells.splice(ob_ref.event_time, 0, detail)
-      this.setState({onDetail: true})
+      this.props.cells.splice(ob_ref.time, 0, detail)
+      this.setState({onDetail: true, indexDetail: ob_ref.time})
     }
   }
+
+
+  _closeDetail() {
+    if(this.state.onDetail) {
+      this.props.cells.splice(this.state.indexDetail, 1)
+      this.setState({onDetail: false})
+    }
+  }
+
 
   _getRowComponent(rowData) {
     try{
@@ -102,12 +131,14 @@ export default class CourseTable extends Component{
       })
 
       return (
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row'}}>
           {row_comps}
         </View>
       )
     }catch(e){
-      return rowData
+      return (
+          rowData
+      )
     }
   }
 
@@ -119,7 +150,6 @@ export default class CourseTable extends Component{
           this.props.cells.map((e)=>{
             if(Component.isPrototypeOf(e))
               return e
-
             return this._getRowComponent(e)
           })
         }
