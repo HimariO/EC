@@ -66,9 +66,16 @@ export default class EventList extends Component {
 
   _renderRow(rowData) {
     return (
-      <View style={{margin: 2, backgroundColor: '#FFF'}}>
-        <Text>{rowData.name}</Text>
-        <Text>{'type:' + rowData.type}</Text>
+      <View style={styles.eventRow}>
+        <View style={styles.thumbnail}>
+          <Image style={{alignSelf: 'stretch'}} source={require('./img/icons_1.png')}/>
+        </View>
+        <View style={{flex: 4, flexDirection: 'column'}}>
+          <Text>{rowData.name}</Text>
+          <Text>{'type:' + rowData.type}</Text>
+          <Text>{'time:' + rowData.time}</Text>
+          <Text>{'day:' + rowData.date}</Text>
+        </View>
       </View>
     )
   }
@@ -109,5 +116,17 @@ var styles = StyleSheet.create({
       height: 1,
       width: 0
     }
+  },
+  eventRow: {
+    margin: 2,
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    borderRadius: 3,
+  },
+  thumbnail: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
