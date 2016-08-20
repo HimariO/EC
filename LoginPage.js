@@ -39,7 +39,7 @@ export default class LoginPage extends Component{
     .then((responseData) => {
       console.log(responseData)
 
-        if(responseData.message == 'login!'){
+        if(responseData.message == 'login!' || responseData.message == 'registered'){
           this.props.navigator.push({
             part: 2,
             case: 'viewPager',

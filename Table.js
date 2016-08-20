@@ -89,7 +89,7 @@ class CourseDetail extends Component{
 
   _onFinish(){
     //upload data here
-    this.props.onClose()
+    this.props.onClose(this.props.ob_ref)
   }
 
 
@@ -147,87 +147,85 @@ export default class CourseTable extends Component{
 
   static propTypes = {
     navigator: React.PropTypes.object.isRequired,
+    ssid: React.PropTypes.string,
   }
 
   state = {
       onDetail: false,
       cells: [
         [
-          {name: '計算機組織概論', time: 1, date: 1, type: 'A'},
-          {name: 'b', time: 1, date: 1, type: 'A'},
-          {name: 'c', time: 1, date: 1, type: 'A'},
-          {name: 'c', time: 1, date: 1, type: 'A'},
-          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: '', time: 1, date: 1, type: 0},
+          {name: '', time: 1, date: 2, type: 0},
+          {name: '', time: 1, date: 3, type: 0},
+          {name: '', time: 1, date: 4, type: 0},
+          {name: '', time: 1, date: 5, type: 0},
         ],
         [
-          {name: 'a', time: 2, date: 1, type: 'A'},
-          {name: 'b', time: 2, date: 1, type: 'A'},
-          {name: 'c', time: 2, date: 1, type: 'A'},
-          {name: 'c', time: 2, date: 1, type: 'A'},
-          {name: 'c', time: 2, date: 1, type: 'A'},
+          {name: '', time: 2, date: 1, type: 0},
+          {name: '', time: 2, date: 2, type: 0},
+          {name: '', time: 2, date: 3, type: 0},
+          {name: '', time: 2, date: 4, type: 0},
+          {name: '', time: 2, date: 5, type: 0},
         ],
         [
-          {name: 'a', time: 3, date: 1, type: 'A'},
-          {name: 'b', time: 3, date: 1, type: 'A'},
-          {name: 'c', time: 3, date: 1, type: 'A'},
-          {name: 'c', time: 3, date: 1, type: 'A'},
-          {name: 'c', time: 3, date: 1, type: 'A'},
+          {name: '', time: 3, date: 1, type: 0},
+          {name: '', time: 3, date: 2, type: 0},
+          {name: '', time: 3, date: 3, type: 0},
+          {name: '', time: 3, date: 4, type: 0},
+          {name: '', time: 3, date: 5, type: 0},
         ],
         [
-          {name: 'a', time: 4, date: 1, type: 'A'},
-          {name: 'c', time: 4, date: 1, type: 'A'},
-          {name: 'b', time: 4, date: 1, type: 'A'},
-          {name: 'c', time: 4, date: 1, type: 'A'},
-          {name: 'c', time: 4, date: 1, type: 'A'},
+          {name: '', time: 4, date: 1, type: 0},
+          {name: '', time: 4, date: 2, type: 0},
+          {name: '', time: 4, date: 3, type: 0},
+          {name: '', time: 4, date: 4, type: 0},
+          {name: '', time: 4, date: 5, type: 0},
         ],
         [
-          {name: 'a', time: 5, date: 1, type: 'A'},
-          {name: 'b', time: 5, date: 1, type: 'A'},
-          {name: 'c', time: 5, date: 1, type: 'A'},
-          {name: 'c', time: 5, date: 1, type: 'A'},
-          {name: 'c', time: 5, date: 1, type: 'A'},
+          {name: '', time: 5, date: 1, type: 0},
+          {name: '', time: 5, date: 2, type: 0},
+          {name: '', time: 5, date: 3, type: 0},
+          {name: '', time: 5, date: 4, type: 0},
+          {name: '', time: 5, date: 5, type: 0},
         ],
         [
-          {name: 'a', time: 6, date: 1, type: 'A'},
-          {name: 'b', time: 6, date: 1, type: 'A'},
-          {name: 'c', time: 6, date: 1, type: 'A'},
-          {name: 'c', time: 6, date: 1, type: 'A'},
-          {name: 'c', time: 6, date: 1, type: 'A'},
+          {name: '', time: 6, date: 1, type: 0},
+          {name: '', time: 6, date: 2, type: 0},
+          {name: '', time: 6, date: 3, type: 0},
+          {name: '', time: 6, date: 4, type: 0},
+          {name: '', time: 6, date: 5, type: 0},
         ],
         [
-          {name: 'a', time: 7, date: 1, type: 'A'},
-          {name: 'b', time: 7, date: 1, type: 'A'},
-          {name: 'c', time: 7, date: 1, type: 'A'},
-          {name: 'c', time: 7, date: 1, type: 'A'},
-          {name: 'c', time: 7, date: 1, type: 'A'},
+          {name: '', time: 7, date: 1, type: 0},
+          {name: '', time: 7, date: 2, type: 0},
+          {name: '', time: 7, date: 3, type: 0},
+          {name: '', time: 7, date: 4, type: 0},
+          {name: '', time: 7, date: 5, type: 0},
         ],
         [
-          {name: 'a', time: 8, date: 1, type: 'A'},
-          {name: 'b', time: 8, date: 1, type: 'A'},
-          {name: 'c', time: 8, date: 1, type: 'A'},
-          {name: 'c', time: 8, date: 1, type: 'A'},
-          {name: 'c', time: 8, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 9, date: 1, type: 'A'},
-          {name: 'b', time: 9, date: 1, type: 'A'},
-          {name: 'c', time: 9, date: 1, type: 'A'},
-          {name: 'c', time: 9, date: 1, type: 'A'},
-          {name: 'c', time: 9, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 10, date: 1, type: 'A'},
-          {name: 'b', time: 10, date: 1, type: 'A'},
-          {name: 'c', time: 10, date: 1, type: 'A'},
-          {name: 'c', time: 10, date: 1, type: 'A'},
-          {name: 'c', time: 10, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 11, date: 1, type: 'A'},
-          {name: 'b', time: 11, date: 1, type: 'A'},
-          {name: 'c', time: 11, date: 1, type: 'A'},
-          {name: 'c', time: 11, date: 1, type: 'A'},
-          {name: 'c', time: 11, date: 1, type: 'A'},
+          {name: '', time: 8, date: 1, type: 0},
+          {name: '', time: 8, date: 2, type: 0},
+          {name: '', time: 8, date: 3, type: 0},
+          {name: '', time: 8, date: 4, type: 0},
+          {name: '', time: 8, date: 5, type: 0},
+        ],[
+          {name: '', time: 9, date: 1, type: 0},
+          {name: '', time: 9, date: 2, type: 0},
+          {name: '', time: 9, date: 3, type: 0},
+          {name: '', time: 9, date: 4, type: 0},
+          {name: '', time: 9, date: 5, type: 0},
+        ],[
+          {name: '', time: 10, date: 1, type: 0},
+          {name: '', time: 10, date: 2, type: 0},
+          {name: '', time: 10, date: 3, type: 0},
+          {name: '', time: 10, date: 4, type: 0},
+          {name: '', time: 10, date: 5, type: 0},
+        ],[
+          {name: '', time: 11, date: 1, type: 0},
+          {name: '', time: 11, date: 2, type: 0},
+          {name: '', time: 11, date: 3, type: 0},
+          {name: '', time: 11, date: 4, type: 0},
+          {name: '', time: 11, date: 5, type: 0},
         ],
       ]
   }
@@ -239,37 +237,64 @@ export default class CourseTable extends Component{
     this._getRowComponent = this._getRowComponent.bind(this)
     this._closeDetail = this._closeDetail.bind(this)
     this._getTable = this._getTable.bind(this)
+    this._updateSinge = this._updateSinge.bind(this)
   }
+
+
+  componentDidMount() {
+    this._getTable()
+  }
+
 
   _getTable(){
 
-      fetch("http://192.168.43.57:3000/logins", {
+      fetch("http://192.168.43.57:3000/lookupclass", {
           method: "POST",
           headers: {},
           body: JSON.stringify({
-            user_name: this.username,
-            user_pass: this.pass,
-            credit_curr: 111,
+            user_id: this.props.ssid,
           })
       })
       .then((response) => response.json())
       .then((responseData) => {
         console.log(responseData)
-
-          if(responseData.message == 'login!'){
-            this.props.navigator.push({
-              part: 2,
-              case: 'viewPager',
-              pass_data: {
-                ssid: responseData.user_id
-              }
-            })
+        for(var line of responseData){
+          this.states.cells[line.ch][line.days] = {
+            name: line.class_name,
+            time: line.ch,
+            date: line.days,
+            type: line.type,
           }
+        }
+
+        this.setState({cells: this.state.cells})
+      })
+      .done();
+
+  }
+
+
+  _updateSinge(evnet){
+
+      fetch("http://192.168.43.57:3000/upclass", {
+          method: "POST",
+          headers: {},
+          body: JSON.stringify({
+            user_id: this.props.ssid,
+            type: event.type,
+            class_name: evnet.name,
+            days: event.date,
+            ch: event.time
+          })
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
 
       })
       .done();
-    
+
   }
+
 
   _handleBoxPress(ob_ref) {
     var detail = <CourseDetail ob_ref={ob_ref} onClose={this._closeDetail}/>
@@ -280,8 +305,9 @@ export default class CourseTable extends Component{
   }
 
 
-  _closeDetail() {
+  _closeDetail(event) {
     if(this.state.onDetail) {
+      this._updateSinge(event)
       this.state.cells.splice(this.state.indexDetail, 1)
       this.setState({onDetail: false})
     }

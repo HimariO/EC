@@ -29,10 +29,11 @@ import EventList from './EventScene'
 export default class ViewPagerPage extends Component {
     static propTypes = {
       navigator: React.PropTypes.any.isRequired,
+      ssid: React.PropTypes.string,
     }
 
     state = {
-      
+
     }
 
     render() {
@@ -59,7 +60,7 @@ export default class ViewPagerPage extends Component {
               >
                 <View style={{backgroundColor:'#1AA094'}}>
 
-                   <CourseTable navigator={this.props.navigator}/>
+                   <CourseTable navigator={this.props.navigator} ssid={this.props.ssid}/>
                 </View>
 
                 <View style={{backgroundColor:'rgb(75, 193, 237)'}}>

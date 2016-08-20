@@ -45,6 +45,7 @@ class EC extends Component {
           <ViewPagerPage
             page_style={route.part}
             navigator={navigator}
+            ssid={route.ssid}
           />
         )
       break
