@@ -20,8 +20,11 @@ import {
 
 import ViewPagerPage from './Pager'
 import LoginPage from './LoginPage'
+import EventDetail from './EventDetail'
+import CreateEvent from  './CreateEvent'
 
 var _navigator = undefined
+const URL = 'http://192.168.43.57:3000/'
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
@@ -45,12 +48,18 @@ class EC extends Component {
           <ViewPagerPage
             page_style={route.part}
             navigator={navigator}
-            ssid={route.ssid}
+            ssid={route.pass_data.ssid}
+            domain={URL}
           />
         )
       break
 
-      case 'courseDetail':
+      case 'event':
+      return (<EventDetail/>)
+      break
+
+      case 'create_event':
+      return (<CreateEvent ssid={route.pass_data.ssid} domain={URL} navigator={navigator}/>)
       break
 
       case 'chat':
@@ -60,7 +69,7 @@ class EC extends Component {
       default:
       console.log('NO!!!');
         return (
-          <LoginPage navigator={navigator}/>
+          <LoginPage navigator={navigator} domain={URL}/>
         )
     }
   }

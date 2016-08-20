@@ -26,7 +26,9 @@ export default class LoginPage extends Component{
   }
 
   _login(){
-    fetch("http://192.168.43.57:3000/logins", {
+
+
+    fetch(this.props.domain + 'logins', {
         method: "POST",
         headers: {},
         body: JSON.stringify({
@@ -39,12 +41,12 @@ export default class LoginPage extends Component{
     .then((responseData) => {
       console.log(responseData)
 
-        if(responseData.message == 'login!' || responseData.message == 'registered'){
+        if(responseData.message == 'login' || responseData.message == 'registered'){
           this.props.navigator.push({
             part: 2,
             case: 'viewPager',
             pass_data: {
-              ssid: responseData.user_id
+              ssid: responseData.userid
             }
           })
         }
@@ -86,7 +88,20 @@ export default class LoginPage extends Component{
                   backgroundColor: '#1155DD'
                 }
                }}/>
-               </View>
+               <AwesomeButton states={{
+                       default: {
+                         text: 'Press me?',
+                         onPress: ()=>{
+                           this.props.navigator.push({
+                             part: 2,
+                             case: 'viewPager',
+                             pass_data: {ssid : 'asd'}
+                           })
+                         },
+                         backgroundColor: '#1155DD'
+                       }
+                      }}/>
+        </View>
       </View>
     )
   }

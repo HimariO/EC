@@ -30,6 +30,7 @@ export default class ViewPagerPage extends Component {
     static propTypes = {
       navigator: React.PropTypes.any.isRequired,
       ssid: React.PropTypes.string,
+      domain: React.PropTypes.string.isRequired,
     }
 
     state = {
@@ -60,13 +61,13 @@ export default class ViewPagerPage extends Component {
               >
                 <View style={{backgroundColor:'#1AA094'}}>
 
-                   <CourseTable navigator={this.props.navigator} ssid={this.props.ssid}/>
+                   <CourseTable domain={this.props.domain} navigator={this.props.navigator} ssid={this.props.ssid}/>
                 </View>
 
                 <View style={{backgroundColor:'rgb(75, 193, 237)'}}>
-                  <EventList/>
+                  <EventList navigator={this.props.navigator}/>
                   <ActionButton buttonColor="rgba(231,76,60,1)">
-                    <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
+                    <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={()=>{this.props.navigator.push({case: 'create_event', pass_data: {ssid:this.props.ssid}})}}>
                       <Icon name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
                     <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
@@ -78,52 +79,17 @@ export default class ViewPagerPage extends Component {
                   </ActionButton>
                 </View>
 
-                <View style={{backgroundColor:'#BA6014'}}>
-                  <Text>page Five</Text>
-                </View>
+                <ScrollView style={{backgroundColor:'#BA6014'}}>
+                  <SchListCard/>
+                  <SchListCard/>
+                  <SchListCard/>
+                  <SchListCard/>
+                </ScrollView>
               </IndicatorViewPager>
             </View>
           );
           break
 
-        case 3:
-        default:
-          var cells = [];
-
-          return (
-            <View style={{flex:1}}>
-              <IndicatorViewPager
-              style={{flex:1}}
-              indicator={this._renderTabIndicator()}
-              >
-                <View style={{backgroundColor:'#1AA094'}}>
-
-                   <CourseTable
-                    cells={this.state.cells}
-                   />
-                </View>
-
-                <View style={{backgroundColor:'rgb(75, 193, 237)'}}>
-                  <EventList/>
-                  <ActionButton buttonColor="rgba(231,76,60,1)">
-                    <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
-                      <Icon name="md-create" style={styles.actionButtonIcon} />
-                    </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
-                      <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
-                    </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
-                      <Icon name="md-done-all" style={styles.actionButtonIcon} />
-                    </ActionButton.Item>
-                  </ActionButton>
-                </View>
-
-                <View style={{backgroundColor:'#BA6014'}}>
-                  <Text>page Five</Text>
-                </View>
-              </IndicatorViewPager>
-            </View>
-          );
       }
     }
 

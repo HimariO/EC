@@ -19,7 +19,11 @@ var PULLDOWN_DISTANCE = 40 // pixels
 
 
 export default class EventList extends Component {
-  // Initialize the hardcoded data
+
+  static propTypes = {
+    navigator: React.PropTypes.object.isRequired
+  }
+
   state = {
     filter: 't',
     sortBy: 't',
@@ -36,6 +40,7 @@ export default class EventList extends Component {
     }
 
     this._fetchData = this._fetchData.bind(this)
+    this._openEvent = this._openEvent.bind(this)
   }
 
 
@@ -64,9 +69,15 @@ export default class EventList extends Component {
    return temp
   }
 
+
+  _openEvent(data){
+    this.props.navitor.push({case: 'event', pass_data: {event_data: data}})
+  }
+
+
   _renderRow(rowData) {
     return (
-      <View style={styles.eventRow}>
+      <TouchableOpacity style={styles.eventRow} onPress={()=>this._openEvent(rowData)}>
         <View style={styles.thumbnail}>
           <Image style={{alignSelf: 'stretch'}} source={require('./img/icons_1.png')}/>
         </View>
@@ -76,13 +87,13 @@ export default class EventList extends Component {
           <Text>{'time:' + rowData.time}</Text>
           <Text>{'day:' + rowData.date}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 
+
   render() {
     return (
-
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}

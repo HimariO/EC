@@ -13,7 +13,7 @@ import {
   Dimensions,
 } from 'react-native'
 
-import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
+import ModalPicker from 'react-native-modal-picker'
 
 const window = Dimensions.get('window')
 
@@ -43,8 +43,22 @@ class CourseBox extends Component{
   }
 
   render() {
+    var color = '';
+    switch(this.state.event_type){
+      case 0:
+      color = '#FFF'
+      break
+
+      case 1:
+      color = 'rgb(134, 188, 244)'
+      break
+      case 2:
+      color = 'rgb(246, 212, 110)'
+
+    }
+
     return (
-      <TouchableOpacity style={styles.box} onPress={this._onPress}>
+      <TouchableOpacity style={[styles.box, {backgroundColor: color}]} onPress={this._onPress}>
         <Text style={{fontSize: 30}}>{this.props.data_source.name}</Text>
         <Text>{this.props.data_source.type}</Text>
         <Text>{this.props.data_source.time}</Text>
@@ -99,30 +113,15 @@ class CourseDetail extends Component{
       type_placeholder = this.state.curr_type
 
     return (
-        <View style={{height: 200, backgroundColor:'rgb(75, 193, 237)'}}>
+        <View style={{height: 200, backgroundColor:'rgb(75, 193, 237)', alignItems:'center'}}>
 
 
-              <Menu onSelect={this._setType}>
-                <MenuTrigger disabled={false} style={styles.menuTrigger}>
-                  <Text style={styles.menuTriggerText}>{type_placeholder}</Text>
-                </MenuTrigger>
-                <MenuOptions style={styles.menuOptions}>
-                  <MenuOption value="Free">
-                    <Text>Free</Text>
-                  </MenuOption>
-                  <MenuOption value="Course">
-                    <Text>Course</Text>
-                  </MenuOption>
-                  <MenuOption value="disabled" disabled={true}>
-                    <Text style={styles.disabled}>Disabled option</Text>
-                  </MenuOption>
-                  <View style={styles.divider}/>
-                  <MenuOption value={{ message: 'Hello World!' }}>
-                    <Text>Option with object value</Text>
-                  </MenuOption>
-                </MenuOptions>
-              </Menu>
-
+          <ModalPicker
+           data={[{ key: 1, section: true, label: 'Fruits' },
+            { key: 2, label: 'Red Apples' },
+            { key: 3, label: 'Cherries' },]}
+           initValue="Select something yummy!"
+           onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} />
 
             <TextInput
             onChangeText={(text)=>{
@@ -148,6 +147,7 @@ export default class CourseTable extends Component{
   static propTypes = {
     navigator: React.PropTypes.object.isRequired,
     ssid: React.PropTypes.string,
+    domain: React.PropTypes.string.isRequired,
   }
 
   state = {
@@ -247,12 +247,12 @@ export default class CourseTable extends Component{
 
 
   _getTable(){
-
-      fetch("http://192.168.43.57:3000/lookupclass", {
+      try{
+      fetch(this.props.domain + 'lookupclass', {
           method: "POST",
           headers: {},
           body: JSON.stringify({
-            user_id: this.props.ssid,
+            userid: this.props.ssid,
           })
       })
       .then((response) => response.json())
@@ -265,24 +265,29 @@ export default class CourseTable extends Component{
             date: line.days,
             type: line.type,
           }
+          console.log(line);
         }
 
         this.setState({cells: this.state.cells})
       })
       .done();
+    }catch(e){
+
+    }
 
   }
 
 
-  _updateSinge(evnet){
+  _updateSinge(event){
+    var a = 'http://192.168.43.57:3000/upclass'
 
-      fetch("http://192.168.43.57:3000/upclass", {
+      fetch(this.props.domain + 'upclass', {
           method: "POST",
           headers: {},
           body: JSON.stringify({
-            user_id: this.props.ssid,
+            userid: this.props.ssid,
             type: event.type,
-            class_name: evnet.name,
+            class_name: event.name,
             days: event.date,
             ch: event.time
           })
@@ -343,7 +348,7 @@ export default class CourseTable extends Component{
   render() {
     return (
       <ScrollView>
-        <MenuContext style={{ flex: 1 }} ref="MenuContext">
+
         {
           this.state.cells.map((e)=>{
             if(Component.isPrototypeOf(e))
@@ -351,7 +356,7 @@ export default class CourseTable extends Component{
             return this._getRowComponent(e)
           })
         }
-        </MenuContext>
+
       </ScrollView>
     )
   }
@@ -393,7 +398,7 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     padding: 1,
     borderColor: '#FFF',
-    width:150,
+
     paddingHorizontal: 5
   },
   menuTriggerText: {

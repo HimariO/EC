@@ -31,18 +31,6 @@ const ColoredRaisedButton = MKButton.coloredButton()
   .build();
 
 
-export default class OneDaySchList extends Component {
-    getInitialState() {
-      return ({
-
-      })
-    }
-
-    render() {
-
-    }
-}
-
 export default class SchListCard extends Component {
 
   render() {
