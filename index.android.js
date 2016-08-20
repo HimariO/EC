@@ -36,6 +36,7 @@ class EC extends Component {
 
   _router(route, navigator) {
     _navigator = navigator
+    console.log(`go~${route.case}`)
 
     switch (route.case) {
 
@@ -56,8 +57,9 @@ class EC extends Component {
 
       case 'login':
       default:
+      console.log('NO!!!');
         return (
-          <LoginPage/>
+          <LoginPage navigator={navigator}/>
         )
     }
   }

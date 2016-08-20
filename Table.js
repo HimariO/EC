@@ -130,7 +130,7 @@ class CourseDetail extends Component{
               placeholder="Event Name..."
             }}
             />
-            
+
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity onPress={this._onFinish}>
@@ -146,11 +146,90 @@ class CourseDetail extends Component{
 export default class CourseTable extends Component{
 
   static propTypes = {
-    cells: React.PropTypes.arrayOf(React.PropTypes.array).isRequired,
+    navigator: React.PropTypes.object.isRequired,
   }
 
   state = {
       onDetail: false,
+      cells: [
+        [
+          {name: '計算機組織概論', time: 1, date: 1, type: 'A'},
+          {name: 'b', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+          {name: 'c', time: 1, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 2, date: 1, type: 'A'},
+          {name: 'b', time: 2, date: 1, type: 'A'},
+          {name: 'c', time: 2, date: 1, type: 'A'},
+          {name: 'c', time: 2, date: 1, type: 'A'},
+          {name: 'c', time: 2, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 3, date: 1, type: 'A'},
+          {name: 'b', time: 3, date: 1, type: 'A'},
+          {name: 'c', time: 3, date: 1, type: 'A'},
+          {name: 'c', time: 3, date: 1, type: 'A'},
+          {name: 'c', time: 3, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 4, date: 1, type: 'A'},
+          {name: 'c', time: 4, date: 1, type: 'A'},
+          {name: 'b', time: 4, date: 1, type: 'A'},
+          {name: 'c', time: 4, date: 1, type: 'A'},
+          {name: 'c', time: 4, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 5, date: 1, type: 'A'},
+          {name: 'b', time: 5, date: 1, type: 'A'},
+          {name: 'c', time: 5, date: 1, type: 'A'},
+          {name: 'c', time: 5, date: 1, type: 'A'},
+          {name: 'c', time: 5, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 6, date: 1, type: 'A'},
+          {name: 'b', time: 6, date: 1, type: 'A'},
+          {name: 'c', time: 6, date: 1, type: 'A'},
+          {name: 'c', time: 6, date: 1, type: 'A'},
+          {name: 'c', time: 6, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 7, date: 1, type: 'A'},
+          {name: 'b', time: 7, date: 1, type: 'A'},
+          {name: 'c', time: 7, date: 1, type: 'A'},
+          {name: 'c', time: 7, date: 1, type: 'A'},
+          {name: 'c', time: 7, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 8, date: 1, type: 'A'},
+          {name: 'b', time: 8, date: 1, type: 'A'},
+          {name: 'c', time: 8, date: 1, type: 'A'},
+          {name: 'c', time: 8, date: 1, type: 'A'},
+          {name: 'c', time: 8, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 9, date: 1, type: 'A'},
+          {name: 'b', time: 9, date: 1, type: 'A'},
+          {name: 'c', time: 9, date: 1, type: 'A'},
+          {name: 'c', time: 9, date: 1, type: 'A'},
+          {name: 'c', time: 9, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 10, date: 1, type: 'A'},
+          {name: 'b', time: 10, date: 1, type: 'A'},
+          {name: 'c', time: 10, date: 1, type: 'A'},
+          {name: 'c', time: 10, date: 1, type: 'A'},
+          {name: 'c', time: 10, date: 1, type: 'A'},
+        ],
+        [
+          {name: 'a', time: 11, date: 1, type: 'A'},
+          {name: 'b', time: 11, date: 1, type: 'A'},
+          {name: 'c', time: 11, date: 1, type: 'A'},
+          {name: 'c', time: 11, date: 1, type: 'A'},
+          {name: 'c', time: 11, date: 1, type: 'A'},
+        ],
+      ]
   }
 
 
@@ -159,13 +238,43 @@ export default class CourseTable extends Component{
     this._handleBoxPress = this._handleBoxPress.bind(this)
     this._getRowComponent = this._getRowComponent.bind(this)
     this._closeDetail = this._closeDetail.bind(this)
+    this._getTable = this._getTable.bind(this)
   }
 
+  _getTable(){
+
+      fetch("http://192.168.43.57:3000/logins", {
+          method: "POST",
+          headers: {},
+          body: JSON.stringify({
+            user_name: this.username,
+            user_pass: this.pass,
+            credit_curr: 111,
+          })
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData)
+
+          if(responseData.message == 'login!'){
+            this.props.navigator.push({
+              part: 2,
+              case: 'viewPager',
+              pass_data: {
+                ssid: responseData.user_id
+              }
+            })
+          }
+
+      })
+      .done();
+    
+  }
 
   _handleBoxPress(ob_ref) {
     var detail = <CourseDetail ob_ref={ob_ref} onClose={this._closeDetail}/>
     if(!this.state.onDetail) {
-      this.props.cells.splice(ob_ref.time, 0, detail)
+      this.state.cells.splice(ob_ref.time, 0, detail)
       this.setState({onDetail: true, indexDetail: ob_ref.time})
     }
   }
@@ -173,7 +282,7 @@ export default class CourseTable extends Component{
 
   _closeDetail() {
     if(this.state.onDetail) {
-      this.props.cells.splice(this.state.indexDetail, 1)
+      this.state.cells.splice(this.state.indexDetail, 1)
       this.setState({onDetail: false})
     }
   }
@@ -210,7 +319,7 @@ export default class CourseTable extends Component{
       <ScrollView>
         <MenuContext style={{ flex: 1 }} ref="MenuContext">
         {
-          this.props.cells.map((e)=>{
+          this.state.cells.map((e)=>{
             if(Component.isPrototypeOf(e))
               return e
             return this._getRowComponent(e)

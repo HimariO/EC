@@ -12,26 +12,48 @@ import {
   Dimensions,
 } from 'react-native'
 
-import MKButton from 'react-native-material-kit'
-
-// const CustomButton = new MKButton.Builder()
-//   .withBackgroundColor(MKColor.Teal)
-//   .withShadowRadius(2)
-//   .withShadowOffset({width:0, height:2})
-//   .withShadowOpacity(.7)
-//   .withShadowColor('black')
-//   .withOnPress(() => {
-//
-//   })
-//   .withTextStyle({
-//     color: 'white',
-//     fontWeight: 'bold',
-//   })
-//   .withText('LOGIN')
-//   .build();
+import AwesomeButton from 'react-native-awesome-button';
 
 
 export default class LoginPage extends Component{
+  static propTypes = {
+    navigator: React.PropTypes.object.isRequired,
+  }
+
+  constructor(props) {
+    super(props)
+    this._login = this._login.bind(this)
+  }
+
+  _login(){
+    fetch("http://192.168.43.57:3000/logins", {
+        method: "POST",
+        headers: {},
+        body: JSON.stringify({
+          user_name: this.username,
+          user_pass: this.pass,
+          credit_curr: 111,
+        })
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData)
+
+        if(responseData.message == 'login!'){
+          this.props.navigator.push({
+            part: 2,
+            case: 'viewPager',
+            pass_data: {
+              ssid: responseData.user_id
+            }
+          })
+        }
+
+    })
+    .done();
+  }
+
+
   render(){
     return (
       <View style={{
@@ -41,9 +63,30 @@ export default class LoginPage extends Component{
         alignItems: 'center',
       }}>
         <Image source={require('./img/Logo.png')}/>
-        <TextInput placeholder="UserName"/>
-        <TextInput placeholder="PassWord"/>
-        
+        <TextInput
+          style={{width:200}}
+          placeholder="UserName"
+          onChangeText={(text)=>{
+            this.username = text
+          }}
+        />
+        <TextInput
+          style={{width:200}}
+          placeholder="PassWord"
+          onChangeText={(text)=>{
+            this.pass = text
+          }}
+        />
+
+        <View style={{flexDirection: 'row', width: 200, marginTop: 5}} >
+        <AwesomeButton states={{
+                default: {
+                  text: 'Press me',
+                  onPress: this._login,
+                  backgroundColor: '#1155DD'
+                }
+               }}/>
+               </View>
       </View>
     )
   }

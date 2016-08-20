@@ -32,85 +32,7 @@ export default class ViewPagerPage extends Component {
     }
 
     state = {
-      cells: [
-        [
-          {name: '計算機組織概論', time: 1, date: 1, type: 'A'},
-          {name: 'b', time: 1, date: 1, type: 'A'},
-          {name: 'c', time: 1, date: 1, type: 'A'},
-          {name: 'c', time: 1, date: 1, type: 'A'},
-          {name: 'c', time: 1, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 2, date: 1, type: 'A'},
-          {name: 'b', time: 2, date: 1, type: 'A'},
-          {name: 'c', time: 2, date: 1, type: 'A'},
-          {name: 'c', time: 2, date: 1, type: 'A'},
-          {name: 'c', time: 2, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 3, date: 1, type: 'A'},
-          {name: 'b', time: 3, date: 1, type: 'A'},
-          {name: 'c', time: 3, date: 1, type: 'A'},
-          {name: 'c', time: 3, date: 1, type: 'A'},
-          {name: 'c', time: 3, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 4, date: 1, type: 'A'},
-          {name: 'c', time: 4, date: 1, type: 'A'},
-          {name: 'b', time: 4, date: 1, type: 'A'},
-          {name: 'c', time: 4, date: 1, type: 'A'},
-          {name: 'c', time: 4, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 5, date: 1, type: 'A'},
-          {name: 'b', time: 5, date: 1, type: 'A'},
-          {name: 'c', time: 5, date: 1, type: 'A'},
-          {name: 'c', time: 5, date: 1, type: 'A'},
-          {name: 'c', time: 5, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 6, date: 1, type: 'A'},
-          {name: 'b', time: 6, date: 1, type: 'A'},
-          {name: 'c', time: 6, date: 1, type: 'A'},
-          {name: 'c', time: 6, date: 1, type: 'A'},
-          {name: 'c', time: 6, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 7, date: 1, type: 'A'},
-          {name: 'b', time: 7, date: 1, type: 'A'},
-          {name: 'c', time: 7, date: 1, type: 'A'},
-          {name: 'c', time: 7, date: 1, type: 'A'},
-          {name: 'c', time: 7, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 8, date: 1, type: 'A'},
-          {name: 'b', time: 8, date: 1, type: 'A'},
-          {name: 'c', time: 8, date: 1, type: 'A'},
-          {name: 'c', time: 8, date: 1, type: 'A'},
-          {name: 'c', time: 8, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 9, date: 1, type: 'A'},
-          {name: 'b', time: 9, date: 1, type: 'A'},
-          {name: 'c', time: 9, date: 1, type: 'A'},
-          {name: 'c', time: 9, date: 1, type: 'A'},
-          {name: 'c', time: 9, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 10, date: 1, type: 'A'},
-          {name: 'b', time: 10, date: 1, type: 'A'},
-          {name: 'c', time: 10, date: 1, type: 'A'},
-          {name: 'c', time: 10, date: 1, type: 'A'},
-          {name: 'c', time: 10, date: 1, type: 'A'},
-        ],
-        [
-          {name: 'a', time: 11, date: 1, type: 'A'},
-          {name: 'b', time: 11, date: 1, type: 'A'},
-          {name: 'c', time: 11, date: 1, type: 'A'},
-          {name: 'c', time: 11, date: 1, type: 'A'},
-          {name: 'c', time: 11, date: 1, type: 'A'},
-        ],
-      ]
+      
     }
 
     render() {
@@ -137,9 +59,7 @@ export default class ViewPagerPage extends Component {
               >
                 <View style={{backgroundColor:'#1AA094'}}>
 
-                   <CourseTable
-                    cells={this.state.cells}
-                   />
+                   <CourseTable navigator={this.props.navigator}/>
                 </View>
 
                 <View style={{backgroundColor:'rgb(75, 193, 237)'}}>
