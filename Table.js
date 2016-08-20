@@ -13,6 +13,8 @@ import {
   Dimensions,
 } from 'react-native'
 
+import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
+
 const window = Dimensions.get('window')
 
 class CourseBox extends Component{
@@ -57,25 +59,85 @@ class CourseDetail extends Component{
     ob_ref: React.PropTypes.object.isRequired,
   }
 
+  constructor(props){
+    super(props)
+    this.state = {curr_type: undefined}
+    this._setType = this._setType.bind(this)
+    this._onFinish = this._onFinish.bind(this)
+  }
+
+  _setType(value){
+    switch(value){
+      case 'Free':
+      this.props.ob_ref.type = 0
+      this.setState({curr_type: 'Free'})
+      break
+
+      case 'Course':
+      this.props.ob_ref.type = 1
+      this.setState({curr_type: 'Course'})
+      break
+
+      case '':
+      this.props.ob_ref.type = 2
+      this.setState({curr_type: ''})
+      break
+
+    }
+  }
+
+
+  _onFinish(){
+    //upload data here
+    this.props.onClose()
+  }
+
 
   render() {
+    var type_placeholder = 'Select Type...'
+    if(this.state.curr_type)
+      type_placeholder = this.state.curr_type
+
     return (
-      <View style={{height: 100, backgroundColor:'rgb(75, 193, 237)'}}>
-        <TouchableOpacity onPress={this.props.onClose}>
-          <Text>{this.props.ob_ref.time}</Text>
-          <TextInput
+        <View style={{height: 200, backgroundColor:'rgb(75, 193, 237)'}}>
+
+
+              <Menu onSelect={this._setType}>
+                <MenuTrigger disabled={false} style={styles.menuTrigger}>
+                  <Text style={styles.menuTriggerText}>{type_placeholder}</Text>
+                </MenuTrigger>
+                <MenuOptions style={styles.menuOptions}>
+                  <MenuOption value="Free">
+                    <Text>Free</Text>
+                  </MenuOption>
+                  <MenuOption value="Course">
+                    <Text>Course</Text>
+                  </MenuOption>
+                  <MenuOption value="disabled" disabled={true}>
+                    <Text style={styles.disabled}>Disabled option</Text>
+                  </MenuOption>
+                  <View style={styles.divider}/>
+                  <MenuOption value={{ message: 'Hello World!' }}>
+                    <Text>Option with object value</Text>
+                  </MenuOption>
+                </MenuOptions>
+              </Menu>
+
+
+            <TextInput
             onChangeText={(text)=>{
               this.props.ob_ref.name = text
+              placeholder="Event Name..."
             }}
-          />
-          <TextInput
-            onChangeText={(text)=>{
-              this.props.ob_ref.type = text
-            }}
-          />
+            />
+            
 
-        </TouchableOpacity>
-      </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity onPress={this._onFinish}>
+                <Text>OK</Text>
+              </TouchableOpacity>
+            </View>
+        </View>
     )
   }
 }
@@ -146,6 +208,7 @@ export default class CourseTable extends Component{
   render() {
     return (
       <ScrollView>
+        <MenuContext style={{ flex: 1 }} ref="MenuContext">
         {
           this.props.cells.map((e)=>{
             if(Component.isPrototypeOf(e))
@@ -153,6 +216,7 @@ export default class CourseTable extends Component{
             return this._getRowComponent(e)
           })
         }
+        </MenuContext>
       </ScrollView>
     )
   }
@@ -182,5 +246,55 @@ var styles = StyleSheet.create({
       height: 1,
       width: 0
     }
+  },
+  topbar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    backgroundColor: 'black',
+    paddingHorizontal: 5,
+    paddingVertical: 10
+  },
+  menuTrigger: {
+    borderWidth: 1,
+    padding: 1,
+    borderColor: '#FFF',
+    width:150,
+    paddingHorizontal: 5
+  },
+  menuTriggerText: {
+    fontSize: 20
+  },
+  disabled: {
+    color: '#ccc'
+  },
+  divider: {
+    marginVertical: 5,
+    marginHorizontal: 2,
+    borderBottomWidth: 1,
+    borderColor: '#ccc'
+  },
+  content: {
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    paddingBottom: 30,
+    borderBottomWidth: 1,
+    borderColor: '#ccc'
+  },
+  contentText: {
+    fontSize: 18
+  },
+  dropdown: {
+    width: 300,
+    borderColor: '#999',
+    borderWidth: 1,
+    padding: 5
+  },
+  dropdownOptions: {
+    marginTop: 30,
+    borderColor: '#ccc',
+    borderWidth: 2,
+    width: 300,
+    height: 200
   }
 });

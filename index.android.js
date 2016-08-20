@@ -19,6 +19,7 @@ import {
 } from 'react-native'
 
 import ViewPagerPage from './Pager'
+import LoginPage from './LoginPage'
 
 var _navigator = undefined
 
@@ -55,14 +56,16 @@ class EC extends Component {
 
       case 'login':
       default:
-
+        return (
+          <LoginPage/>
+        )
     }
   }
 
   render() {
     return (
       <Navigator
-        initialRoute={{part: 2, case: 'viewPager', pass_data: undefined}}
+        initialRoute={{part: 2, case: 'login', pass_data: undefined}}
         renderScene={this._router}
       />
     )
