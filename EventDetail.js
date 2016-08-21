@@ -15,7 +15,7 @@ import {
 
 const window = Dimensions.get('window')
 
-var PULLDOWN_DISTANCE = 40 // pixels
+import AwesomeButton from 'react-native-awesome-button';
 
 
 export default class EventDetail extends Component {
@@ -44,29 +44,41 @@ export default class EventDetail extends Component {
   }
 
 
+  _partic() {
+
+  }
+
+
   render() {
+    var daystr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
+
     return (
-        <View style={{flexDirection: 'row'}}>
-          <ScrollView style={{flex:1}}>
-            <Text style={{fontSize: 70}}>Mon</Text>
-            <Text style={{backgroundColor: 'rgb(4, 249, 183)', height: 80}}></Text>
-            <Text style={{backgroundColor: '#fff', height: 80}}></Text>
-            <Text style={{backgroundColor: 'rgb(4, 249, 183)', height: 80}}></Text>
-            <Text style={{backgroundColor: '#fff', height: 80, fontSize: 40}}>3 th</Text>
-            <Text style={{backgroundColor: 'rgb(4, 249, 183)', height: 80}}></Text>
-            <Text style={{backgroundColor: '#fff', height: 80}}></Text>
-            <Text style={{backgroundColor: 'rgb(4, 249, 183)', height: 80}}></Text>
-            <Text style={{backgroundColor: '#fff', height: 80}}></Text>
-          </ScrollView>
+
           <ScrollView style={{flex:2, backgroundColor: 'rgb(112, 112, 112)'}}>
+            <View style={[{flexDirection: 'row'}, styles.TopSec]}>
+            <Text style={{fontSize: 70}}>{daystr[this.state.data.days%5]}</Text>
+            <Text style={{fontSize: 40}}>{this.state.data.ch} th</Text>
+            </View>
                   <Text>Event Title </Text>
                   <Text>
-                  Descroption Descroption Descroption
-                  Descroption Descroption Descroption
-                  Descroption Descroption Descroption
+                    {this.state.data.descroption}
                   </Text>
+                  <View style={{flexDirection: 'row', marginTop: 5}} >
+                    <Image style={styles.user_thumbnail} source={require('./img/icons_1.png')}/>
+                    <Image style={styles.user_thumbnail} source={require('./img/icons_1.png')}/>
+                    <Image style={styles.user_thumbnail} source={require('./img/icons_1.png')}/>
+                  </View>
+                  <View style={{flexDirection: 'row', width: 200, marginTop: 5}} >
+                    <AwesomeButton states={{
+                          default: {
+                            text: 'GO',
+                            onPress: this._partic,
+                            backgroundColor: 'rgb(151, 222, 95)'
+                          }
+                         }}/>
+                  </View>
           </ScrollView>
-        </View>
     );
   }
 }
@@ -95,16 +107,13 @@ var styles = StyleSheet.create({
       width: 0
     }
   },
-  eventRow: {
-    margin: 2,
-    backgroundColor: '#FFF',
-    flexDirection: 'row',
-    borderRadius: 3,
+  TopSec: {
+    backgroundColor: '#5adab0',
   },
-  thumbnail: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+  user_thumbnail: {
+    backgroundColor: '#5adab0',
+    height: 100,
+    borderRadius: 50,
+    width: 100
+  },
 });

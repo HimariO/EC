@@ -24,7 +24,7 @@ import EventDetail from './EventDetail'
 import CreateEvent from  './CreateEvent'
 
 var _navigator = undefined
-const URL = 'http://192.168.43.57:3000/'
+var URL = 'http://192.168.43.57:3000/'
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
@@ -55,7 +55,7 @@ class EC extends Component {
       break
 
       case 'event':
-      return (<EventDetail/>)
+        return (<EventDetail/>)
       break
 
       case 'create_event':
@@ -69,7 +69,15 @@ class EC extends Component {
       default:
       console.log('NO!!!');
         return (
-          <LoginPage navigator={navigator} domain={URL}/>
+          <LoginPage
+            navigator={navigator}
+            domain={URL}
+            setURL={
+              (text)=>{
+                URL=text
+              console.log("sadasdasdasdsadasdasdasd")
+            }}
+            />
         )
     }
   }

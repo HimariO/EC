@@ -78,7 +78,6 @@ export default class SchListCard extends Component {
             </View>
           </View>
 
-          <View style={theme.cardMenuStyle}>{menu}</View>
       </View>
     );
   }

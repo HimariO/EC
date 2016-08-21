@@ -117,11 +117,17 @@ class CourseDetail extends Component{
 
 
           <ModalPicker
-           data={[{ key: 1, section: true, label: 'Fruits' },
-            { key: 2, label: 'Red Apples' },
-            { key: 3, label: 'Cherries' },]}
-           initValue="Select something yummy!"
-           onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} />
+           data={
+             [
+               { key: 1, label: 'Free' },
+               { key: 2, label: 'Course' },
+               { key: 3, label: 'Event' },
+            ]
+            }
+           initValue="Do Something!"
+           onChange={(option)=>{
+             alert(`${option.label} (${option.key}) nom nom nom`)
+           }} />
 
             <TextInput
             onChangeText={(text)=>{
@@ -247,7 +253,7 @@ export default class CourseTable extends Component{
 
 
   _getTable(){
-      try{
+    try{
       fetch(this.props.domain + 'lookupclass', {
           method: "POST",
           headers: {},
@@ -257,9 +263,10 @@ export default class CourseTable extends Component{
       })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData)
+        // responseData = JSON.parse("[{ type: 0, class_name: 'h chi h', days: 3, ch: 6 },{ type: 1, class_name: 'test', days: 4, ch: 7 }]")
+
         for(var line of responseData){
-          this.states.cells[line.ch][line.days] = {
+          this.state.cells[line.ch][line.days] = {
             name: line.class_name,
             time: line.ch,
             date: line.days,
@@ -279,8 +286,8 @@ export default class CourseTable extends Component{
 
 
   _updateSinge(event){
-    var a = 'http://192.168.43.57:3000/upclass'
 
+    try{
       fetch(this.props.domain + 'upclass', {
           method: "POST",
           headers: {},
@@ -297,6 +304,9 @@ export default class CourseTable extends Component{
 
       })
       .done();
+    } catch(e){
+
+    }
 
   }
 

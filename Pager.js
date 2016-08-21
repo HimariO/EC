@@ -65,12 +65,15 @@ export default class ViewPagerPage extends Component {
                 </View>
 
                 <View style={{backgroundColor:'rgb(75, 193, 237)'}}>
-                  <EventList navigator={this.props.navigator}/>
+                  <EventList navigator={this.props.navigator} ssid={this.props.ssid} domain={this.props.domain} ref="event_list"/>
+
                   <ActionButton buttonColor="rgba(231,76,60,1)">
                     <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={()=>{this.props.navigator.push({case: 'create_event', pass_data: {ssid:this.props.ssid}})}}>
                       <Icon name="md-create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
+                    <ActionButton.Item buttonColor='#3498db' title="Popular" onPress={() => {
+                      this.refs.event_list._sortData('popular')
+                    }}>
                       <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
                     <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>

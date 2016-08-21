@@ -35,57 +35,123 @@ export default class EventList extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
     this.state = {
-      data: [{name: 'Name', type: 2, date: 3, time:2}],
-      dataSource: ds.cloneWithRows([{name: 'Name', type: 2, date: 3, time:2}])
+      data: [{
+        userid: 'im test data',
+        max_member_number: 0,
+        event_name: 'EventName',
+        descroption: 'NO Descroption',
+        days: 1,
+        ch: 1,
+        point: 10,
+        verity: "abc",
+        paretic_number: 0
+      }],
+      dataSource: ds.cloneWithRows([{
+        userid: 'im test data',
+        max_member_number: 0,
+        event_name: 'EventName',
+        descroption: 'NO Descroption',
+        days: 1,
+        ch: 1,
+        point: 10,
+        verity: "abc",
+        paretic_number: 0
+      }])
     }
 
     this._fetchData = this._fetchData.bind(this)
+    this._sortData = this._sortData.bind (this)
     this._openEvent = this._openEvent.bind(this)
+    this._renderRow = this._renderRow.bind(this)
   }
 
 
   componentDidMount() {
-    this._fetchData()
+    // this._fetchData()
   }
 
 
   _fetchData () {
-    var newData = [
-      {name: 'NewName', type: 3, date: 1, time:8},
-      {name: 'Name', type: 2, date: 3, time:2},
-      {name: 'Name', type: 2, date: 3, time:2},
-      {name: 'Name', type: 2, date: 3, time:2},
-      {name: 'Name', type: 2, date: 3, time:2},
-    ]
+    var newData = []
 
+    try{
+    fetch(this.props.domain + 'search_EC', {
+        method: "POST",
+        headers: {},
+        body: JSON.stringify({
+          userid: this.props.ssid,
+        })
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+
+      var temp = this.state.data.slice()
+      temp = temp.concat(responseData)
+
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(temp),
+        data: temp
+      })
+
+    })
+    .done();
+    } catch(e) {
+
+    }
+  }
+
+
+  _sortData(sortby){
     var temp = this.state.data.slice()
-    temp = temp.concat(newData)
 
-   this.setState({
-     dataSource: this.state.dataSource.cloneWithRows(temp),
-     data: temp
-   })
+    temp = temp.concat([{
+      userid: 'im test data',
+      max_member_number: 0,
+      event_name: 'EventName',
+      descroption: 'NO Descroption',
+      days: 1,
+      ch: 1,
+      point: 10,
+      verity: "abc",
+      paretic_number: 0
+    }])
 
-   return temp
+    switch(sortby){
+      case 'popular':
+        temp.sort((a, b)=>{
+          return a.descroption - b.descroption
+        })
+      break
+    }
+
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(temp),
+      data: temp
+    })
   }
 
 
   _openEvent(data){
-    this.props.navitor.push({case: 'event', pass_data: {event_data: data}})
+    this.props.navigator.push({case: 'event', pass_data: {event_data: data}})
   }
 
 
   _renderRow(rowData) {
+    var daystr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
     return (
-      <TouchableOpacity style={styles.eventRow} onPress={()=>this._openEvent(rowData)}>
+      <TouchableOpacity style={styles.eventRow} onPress={()=>
+        {
+          this._openEvent(rowData)
+        }
+      }>
         <View style={styles.thumbnail}>
           <Image style={{alignSelf: 'stretch'}} source={require('./img/icons_1.png')}/>
         </View>
         <View style={{flex: 4, flexDirection: 'column'}}>
-          <Text>{rowData.name}</Text>
-          <Text>{'type:' + rowData.type}</Text>
-          <Text>{'time:' + rowData.time}</Text>
-          <Text>{'day:' + rowData.date}</Text>
+          <Text>{rowData.event_name}</Text>
+          <Text>{'time:' + rowData.ch + ' th'}</Text>
+          <Text>{'day:' + daystr[rowData.days%6] }</Text>
         </View>
       </TouchableOpacity>
     )

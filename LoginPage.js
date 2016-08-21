@@ -22,13 +22,15 @@ export default class LoginPage extends Component{
 
   constructor(props) {
     super(props)
+
+    this.state = {domain: props.domain}
     this._login = this._login.bind(this)
   }
 
   _login(){
 
 
-    fetch(this.props.domain + 'logins', {
+    fetch(this.state.domain + 'logins', {
         method: "POST",
         headers: {},
         body: JSON.stringify({
@@ -39,7 +41,7 @@ export default class LoginPage extends Component{
     })
     .then((response) => response.json())
     .then((responseData) => {
-      console.log(responseData)
+        console.log(responseData)
 
         if(responseData.message == 'login' || responseData.message == 'registered'){
           this.props.navigator.push({
@@ -80,6 +82,15 @@ export default class LoginPage extends Component{
           }}
         />
 
+        <TextInput
+          style={{width:200}}
+          placeholder="DEv"
+          onChangeText={(text)=>{
+            this.props.setURL(text)
+            this.state.domain = text
+          }}
+        />
+
         <View style={{flexDirection: 'row', width: 200, marginTop: 5}} >
         <AwesomeButton states={{
                 default: {
@@ -88,19 +99,7 @@ export default class LoginPage extends Component{
                   backgroundColor: '#1155DD'
                 }
                }}/>
-               <AwesomeButton states={{
-                       default: {
-                         text: 'Press me?',
-                         onPress: ()=>{
-                           this.props.navigator.push({
-                             part: 2,
-                             case: 'viewPager',
-                             pass_data: {ssid : 'asd'}
-                           })
-                         },
-                         backgroundColor: '#1155DD'
-                       }
-                      }}/>
+
         </View>
       </View>
     )
